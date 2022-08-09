@@ -25,6 +25,7 @@
 #include <assert.h>
 #include <windows.h>
 #include <shobjidl.h>
+#include <atlstr.h>
 #include "nfd_common.h"
 
 
@@ -386,6 +387,7 @@ static nfdresult_t SetDefaultPath( IFileDialog *dialog, const char *defaultPath 
 
 nfdresult_t NFD_OpenDialog( const nfdchar_t *filterList,
                             const nfdchar_t *defaultPath,
+                            const nfdchar_t *title,
                             nfdchar_t **outPath )
 {
     nfdresult_t nfdResult = NFD_ERROR;
@@ -407,6 +409,13 @@ nfdresult_t NFD_OpenDialog( const nfdchar_t *filterList,
     if ( !SUCCEEDED(result) )
     {
         NFDi_SetError("Could not create dialog.");
+        goto end;
+    }
+
+    // Set title
+    result = fileOpenDialog->SetTitle(CA2CT(title));
+    if (!SUCCEEDED(result))
+    {
         goto end;
     }
 
@@ -476,6 +485,7 @@ end:
 
 nfdresult_t NFD_OpenDialogMultiple( const nfdchar_t *filterList,
                                     const nfdchar_t *defaultPath,
+                                    const nfdchar_t *title,
                                     nfdpathset_t *outPaths )
 {
     nfdresult_t nfdResult = NFD_ERROR;
@@ -498,6 +508,13 @@ nfdresult_t NFD_OpenDialogMultiple( const nfdchar_t *filterList,
     {
         fileOpenDialog = NULL;
         NFDi_SetError("Could not create dialog.");
+        goto end;
+    }
+
+    // Set title
+    result = fileOpenDialog->SetTitle(CA2CT(title));
+    if (!SUCCEEDED(result))
+    {
         goto end;
     }
 
@@ -570,6 +587,7 @@ end:
 
 nfdresult_t NFD_SaveDialog( const nfdchar_t *filterList,
                             const nfdchar_t *defaultPath,
+                            const nfdchar_t *title,
                             nfdchar_t **outPath )
 {
     nfdresult_t nfdResult = NFD_ERROR;
@@ -591,6 +609,13 @@ nfdresult_t NFD_SaveDialog( const nfdchar_t *filterList,
     {
         fileSaveDialog = NULL;
         NFDi_SetError("Could not create dialog.");
+        goto end;
+    }
+
+    // Set title
+    result = fileSaveDialog->SetTitle(CA2CT(title));
+    if (!SUCCEEDED(result))
+    {
         goto end;
     }
 
@@ -661,7 +686,8 @@ end:
 
 
 nfdresult_t NFD_PickFolder(const nfdchar_t *defaultPath,
-    nfdchar_t **outPath)
+                            const nfdchar_t *title,
+                            nfdchar_t **outPath)
 {
     nfdresult_t nfdResult = NFD_ERROR;
     DWORD dwOptions = 0;
@@ -682,6 +708,13 @@ nfdresult_t NFD_PickFolder(const nfdchar_t *defaultPath,
     if ( !SUCCEEDED(result) )
     {        
         NFDi_SetError("CoCreateInstance for CLSID_FileOpenDialog failed.");
+        goto end;
+    }
+
+    // Set title
+    result = fileDialog->SetTitle(CA2CT(title));
+    if (!SUCCEEDED(result))
+    {
         goto end;
     }
 
