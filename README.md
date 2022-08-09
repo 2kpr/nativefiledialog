@@ -1,3 +1,7 @@
+# About This Fork #
+
+This library is great, but I needed to ability to add titles to the dialogs in Windows, hence this fork.
+
 # Native File Dialog #
 
 A tiny, neat C library that portably invokes native file open, folder select and save dialogs.  Write dialog code once and have it pop up native dialogs on all supported platforms.  Avoid linking large dependencies like wxWidgets and qt.
