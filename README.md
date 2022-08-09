@@ -1,6 +1,6 @@
 # About This Fork #
 
-This library is great, but I needed to ability to add titles to the dialogs in Windows, hence this fork.
+This library is great, but I needed to ability to add titles and set initial save file names for the dialogs in Windows, hence this fork.
 
 # Native File Dialog #
 
