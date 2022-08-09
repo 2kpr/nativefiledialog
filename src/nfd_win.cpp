@@ -600,7 +600,7 @@ nfdresult_t NFD_SaveDialog( const nfdchar_t *filterList,
     }
     
     // Create dialog
-    ::IFileSaveDialog *fileSaveDialog(NULL);    
+    ::IFileSaveDialog *fileSaveDialog(NULL);
     HRESULT result = ::CoCreateInstance(::CLSID_FileSaveDialog, NULL,
                                         CLSCTX_ALL, ::IID_IFileSaveDialog,
                                         reinterpret_cast<void**>(&fileSaveDialog) );
@@ -619,6 +619,13 @@ nfdresult_t NFD_SaveDialog( const nfdchar_t *filterList,
         goto end;
     }
 
+    // Set file name
+    result = fileSaveDialog->SetFileName(CA2CT(defaultPath));
+    if (!SUCCEEDED(result))
+    {
+        goto end;
+    }
+
     // Build the filter list
     if ( !AddFiltersToDialog( fileSaveDialog, filterList ) )
     {
@@ -626,10 +633,10 @@ nfdresult_t NFD_SaveDialog( const nfdchar_t *filterList,
     }
 
     // Set the default path
-    if ( !SetDefaultPath( fileSaveDialog, defaultPath ) )
-    {
-        goto end;
-    }
+    //if ( !SetDefaultPath( fileSaveDialog, defaultPath ) )
+    //{
+        //goto end;
+    //}
 
     // Show the dialog.
     result = fileSaveDialog->Show(NULL);
